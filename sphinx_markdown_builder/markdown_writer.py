@@ -30,6 +30,7 @@ class MarkdownTranslator(SphinxTranslator,Translator):
     tables = []
     tbodys = []
     theads = []
+
     
     def __init__(self, document: nodes.document, builder: Builder) -> None:
         super().__init__(document, builder)
@@ -258,7 +259,10 @@ class MarkdownTranslator(SphinxTranslator,Translator):
             uri = uri[len(doc_folder):]
             if uri.startswith('/'):
                 uri = '.' + uri
-        self.add('\n\n![image](%s)\n\n' % uri)
+        if isinstance(node.parent, nodes.Inline):
+            self.add('![image](%s)' % uri)
+        else:
+            self.add('\n\n![image](%s)\n\n' % uri)
 
     def depart_image(self, node):
         """Image directive."""
