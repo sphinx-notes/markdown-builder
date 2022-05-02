@@ -93,6 +93,14 @@ class MarkdownTranslator(SphinxTranslator,Translator):
     def depart_desc(self, node):
         pass
 
+    def visit_desc_returns(self, node):
+        # type annotation for function/method return value
+        self.add(' -> ')
+
+    def depart_desc_returns(self, node):
+        # type annotation for function/method return value
+        pass
+
     def visit_desc_annotation(self, node):
         # annotation, e.g 'method', 'class'
         self.add('_')
@@ -118,7 +126,7 @@ class MarkdownTranslator(SphinxTranslator,Translator):
 
     def depart_desc_name(self, node):
         # name of the class/method
-        self.add('(')
+        pass
 
     def visit_desc_content(self, node):
         # the description of the class/method
@@ -140,15 +148,15 @@ class MarkdownTranslator(SphinxTranslator,Translator):
 
     def depart_desc_signature(self, node):
         # the main signature of class/method
-        self.add(')\n')
+        self.ensure_eol()
 
     def visit_desc_parameterlist(self, node):
         # method/class ctor param list
-        pass
+        self.add('(')
 
     def depart_desc_parameterlist(self, node):
         # method/class ctor param list
-        pass
+        self.add(')')
 
     def visit_desc_parameter(self, node):
         # single method/class ctr param
