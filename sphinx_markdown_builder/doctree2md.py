@@ -472,7 +472,7 @@ class Translator(nodes.NodeVisitor):
         if isinstance(node.parent, nodes.list_item) and \
                 type(node.parent) == type(node.parent.next_node(descend=False, siblings=True)):
             return
-        # print(type(node.parent), type(node.parent.next_node(descend=False, siblings=True, ascend=True)))
+        # logger.info(type(node.parent), type(node.parent.next_node(descend=False, siblings=True, ascend=True)))
 
         self.ensure_eol()
         self.add('\n')
