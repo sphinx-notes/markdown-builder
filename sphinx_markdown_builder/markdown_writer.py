@@ -72,7 +72,7 @@ class MarkdownTranslator(SphinxTranslator,Translator):
         pass
 
     def visit_title(self, node):
-        print(">>>> VISIT TITLE", node)
+        logger.info(f"VISIT TITLE: {node}")
         #  Table title means table caption
         if isinstance(node.parent,nodes.table):
             self.add('*')
@@ -257,7 +257,7 @@ class MarkdownTranslator(SphinxTranslator,Translator):
                                          self.builder.images[olduri])
         uri = node['uri']
         
-        print(">>>>> VISIT FIGURE:",node)
+        logger.info(f"VISIT FIGURE: {node}")
         
         
         
@@ -274,7 +274,7 @@ class MarkdownTranslator(SphinxTranslator,Translator):
 
     def depart_image(self, node):
         """Image directive."""
-        print(">>>>> DEPART FIGURE:",node)
+        logger.info(f"DEPART FIGURE: {node}")
         pass
 
     def visit_autosummary_table(self, node):
@@ -323,11 +323,11 @@ class MarkdownTranslator(SphinxTranslator,Translator):
         # TO_DO:
         for sig_id in node.get("ids", ()):
             self.add('<a name="{}"></a>'.format(sig_id))
-        print(">>>> VISIT TABLE: ", node)
+        logger.info(f"VISIT TABLE: {node}")
 
     def depart_table(self, node):
         self.tables.pop()
-        print(">>>> DEPART TABLE")
+        logger.info("DEPART TABLE")
 
     def visit_tabular_col_spec(self, node):
         pass
@@ -351,8 +351,8 @@ class MarkdownTranslator(SphinxTranslator,Translator):
         if not len(self.tables):
             raise nodes.SkipNode
         self.theads.append(node)
-        print(">>>>> VISIT THEAD :", node)
-        print(">>>>> theads : ", self.theads)
+        logger.info(f"VISIT THEAD: {node}")
+        logger.info(f"\ttheads:  {self.theads}")
 
 
 
@@ -374,8 +374,8 @@ class MarkdownTranslator(SphinxTranslator,Translator):
         self.add('|\n')
         self.table_entries = []
         self.theads.pop()
-        print(">>>>>> DEPART THEAD")
-        print(">>>>>> theads : ",self.theads)
+        logger.info("DEPART THEAD")
+        logger.info(f"\ttheads: {self.theads}")
 
     def visit_tbody(self, node):
         if not len(self.tables):
@@ -389,15 +389,15 @@ class MarkdownTranslator(SphinxTranslator,Translator):
         if not len(self.theads) and not len(self.tbodys):
             raise nodes.SkipNode
         self.table_rows.append(node)
-        print(">>>>>> VISIT ROW : ",node)
-        print(">>>>>> row : ",self.table_rows)
+        logger.info(f"VISIT ROW:  {node}")
+        logger.info(f"\trow:  {self.table_rows}")
 
     def depart_row(self, node):
         self.add('|\n')
         if not len(self.theads):
             self.table_entries = []
-        print(">>>>>> DEPART ROW : ")
-        print(">>>>>> row : ",self.table_rows)
+        logger.info("DEPART ROW: ")
+        logger.info(f"\trow :  {self.table_rows}")
 
     def visit_enumerated_list(self, node):
         self.depth.descend('list')
@@ -437,8 +437,8 @@ class MarkdownTranslator(SphinxTranslator,Translator):
             raise nodes.SkipNode
         self.table_entries.append(node)
         self.add('| ')
-        print(">>>>>> VISIT ENTRY : ",node)
-        print(">>>>>> table_entries : ",self.table_entries)
+        logger.info(f"VISIT ENTRY:  {node}")
+        logger.info(f"\ttable_entries:  {self.table_entries}")
 
     def depart_entry(self, node):
         ###  On depart table entry, try to find columnn width specification from heade and calculate this colemn width
@@ -509,8 +509,8 @@ class MarkdownTranslator(SphinxTranslator,Translator):
             else:
                 strNumber  = '.'.join(map(str,self.builder.fignumbers[figtype][figure_id]))
                 
-        # print('Gen new number=%s' % strNumber, ", for tag ",figtype)        
-        logger.debug('Gen new number=%s' % strNumber, ", for tag ",figtype )
+        # logger.info('Gen new number=%s' % strNumber, ", for tag ",figtype)        
+        logger.debug(f"Gen new number={strNumber}, for tag {figtype}")
         return prefix % strNumber          
                      
 
@@ -521,7 +521,7 @@ class MarkdownTranslator(SphinxTranslator,Translator):
         secnumber = self.get_secnumber(node)
         
         if secnumber:
-            print (">>>> ADD add_secnumber:", map(str, secnumber)) 
+            logger.info(f"ADD add_secnumber: {map(str, secnumber)}") 
 
 
     def get_secnumber(self, node: Element) -> Tuple[int, ...]:
