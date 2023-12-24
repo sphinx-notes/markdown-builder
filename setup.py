@@ -14,7 +14,7 @@ with open(path.join(here, 'requirements.txt'), 'r', encoding='utf-8') as f:
 
 setup(
     name='sphinxnotes-markdown-builder',
-    version='0.5.5',
+    version='0.5.7',
     description='sphinx builder that outputs markdown files' + ', an active fork of clayrisser/sphinx-markdown-builder',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -25,7 +25,7 @@ setup(
 
     # https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 7 - Inactive',
         'Intended Audience :: Developers',
         'Topic :: Utilities',
         'License :: OSI Approved :: MIT License',

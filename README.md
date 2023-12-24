@@ -1,4 +1,8 @@
- > **NOTE: This is an active fork of clayrisser/sphinx-markdown-builder.**
+> **NOTE**: This fork is no longer maintained as there is another actively
+> maintained fork https://github.com/liran-funaro/sphinx-markdown-builder,
+> please use it instead.
+
+---
 
 # sphinxnotes-markdown-builder
 
